@@ -1,0 +1,1269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ricky D. Pham | Data Analyst</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <noscript><style>.reveal { opacity: 1 !important; transform: none !important; }</style></noscript>
+  <style>
+    /* ── Reset & Base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-primary);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── CSS Variables ── */
+    :root {
+      --bg-primary:    #0d1117;
+      --bg-secondary:  #161b22;
+      --bg-tertiary:   #21262d;
+      --accent:        #38bdf8;
+      --accent2:       #2dd4bf;
+      --text:          #e6edf3;
+      --muted:         #8b949e;
+      --border:        #30363d;
+      --warning:       #f97316;
+
+      --space-xs: 0.25rem;
+      --space-sm: 0.5rem;
+      --space-md: 1rem;
+      --space-lg: 1.5rem;
+      --space-xl: 2rem;
+      --space-2xl: 3rem;
+      --space-3xl: 4rem;
+      --space-4xl: 6rem;
+
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 16px;
+      --radius-full: 9999px;
+
+      --transition: 0.2s ease;
+    }
+
+    /* ── Container ── */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 var(--space-xl);
+    }
+
+    /* ── Reveal Animation ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ══════════════════════════════════
+       NAV
+    ══════════════════════════════════ */
+    #navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      transition: background var(--transition), border-color var(--transition), backdrop-filter var(--transition);
+      border-bottom: 1px solid transparent;
+    }
+    #navbar.scrolled {
+      background: rgba(22, 27, 34, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom-color: var(--border);
+    }
+    .nav-progress {
+      position: absolute;
+      top: 0; left: 0;
+      height: 2px;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      transition: width 0.1s linear;
+      z-index: 101;
+    }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+    .nav-logo {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--accent);
+      text-decoration: none;
+      letter-spacing: 0.03em;
+    }
+    .nav-logo span { color: var(--text); }
+    .nav-links {
+      display: flex;
+      gap: var(--space-xl);
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color var(--transition);
+      position: relative;
+      padding-bottom: 2px;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px; left: 0;
+      width: 0; height: 2px;
+      background: var(--accent);
+      transition: width var(--transition);
+      border-radius: var(--radius-full);
+    }
+    .nav-links a:hover,
+    .nav-links a.active { color: var(--accent); }
+    .nav-links a:hover::after,
+    .nav-links a.active::after { width: 100%; }
+
+    .hamburger {
+      display: none;
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-size: 1.25rem;
+      cursor: pointer;
+      padding: var(--space-xs) var(--space-sm);
+      border-radius: var(--radius-sm);
+      line-height: 1;
+    }
+
+    /* ══════════════════════════════════
+       HERO
+    ══════════════════════════════════ */
+    #hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      padding-top: 64px;
+      background: #08000f;
+    }
+    .hero-bloom-purple {
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 65% 70% at 85% 40%, rgba(139,92,246,0.22) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-bloom-cyan {
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 50% 55% at 10% 65%, rgba(56,189,248,0.12) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .hero-scanlines {
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(139,92,246,0.018) 3px, rgba(139,92,246,0.018) 4px);
+      pointer-events: none;
+    }
+    .hero-glow-bar {
+      position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent 0%, #8b5cf6 30%, #38bdf8 70%, transparent 100%);
+      box-shadow: 0 0 20px rgba(139,92,246,0.5), 0 0 50px rgba(56,189,248,0.2);
+      pointer-events: none;
+    }
+    #heroCanvas { display: none; }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: var(--space-4xl);
+      align-items: center;
+      position: relative;
+      z-index: 1;
+      width: 100%;
+    }
+    .hero-greeting {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.9rem;
+      color: #a78bfa;
+      margin-bottom: var(--space-sm);
+      letter-spacing: 0.08em;
+    }
+    .hero-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: var(--space-md);
+      background: linear-gradient(135deg, #e6edf3 20%, #a78bfa 55%, #38bdf8 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero-role {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(1.25rem, 3vw, 1.75rem);
+      font-weight: 500;
+      color: var(--muted);
+      margin-bottom: var(--space-md);
+      min-height: 2.2rem;
+    }
+    .cursor {
+      display: inline-block;
+      color: var(--accent);
+      font-weight: 300;
+      animation: blink 1s step-end infinite;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+    .hero-location {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: var(--space-xl);
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .hero-btns {
+      display: flex;
+      gap: var(--space-md);
+      flex-wrap: wrap;
+      margin-bottom: var(--space-xl);
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      padding: 0.65rem 1.4rem;
+      border-radius: var(--radius-full);
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all var(--transition);
+      cursor: pointer;
+      border: none;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #0d1117;
+    }
+    .btn-primary:hover {
+      background: #7dd3fc;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(56,189,248,0.3);
+    }
+    .btn-outline {
+      background: transparent;
+      color: var(--accent);
+      border: 1.5px solid var(--accent);
+    }
+    .btn-outline:hover {
+      background: rgba(56,189,248,0.08);
+      transform: translateY(-2px);
+    }
+    .btn-resume {
+      background: transparent;
+      color: #fdba74;
+      border: 1.5px solid #fb923c;
+    }
+    .btn-resume:hover {
+      background: rgba(251,146,60,0.1);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(251,146,60,0.2);
+    }
+    .hero-socials {
+      display: flex;
+      gap: var(--space-md);
+    }
+    .social-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px; height: 40px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      color: var(--muted);
+      text-decoration: none;
+      transition: all var(--transition);
+    }
+    .social-link:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+      background: rgba(56,189,248,0.08);
+      transform: translateY(-2px);
+    }
+    .social-link svg { width: 18px; height: 18px; }
+
+    /* Avatar */
+    .hero-avatar {
+      position: relative;
+    }
+    .avatar-ring {
+      width: 260px; height: 260px;
+      border-radius: 50%;
+      padding: 4px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      box-shadow: 0 0 0 8px rgba(56,189,248,0.08), 0 20px 60px rgba(0,0,0,0.4);
+      flex-shrink: 0;
+    }
+    .avatar-ring img {
+      width: 100%; height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      display: block;
+      background: var(--bg-secondary);
+    }
+
+    /* ══════════════════════════════════
+       SECTION COMMON
+    ══════════════════════════════════ */
+    section {
+      padding: var(--space-4xl) 0;
+    }
+    .section-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.875rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: var(--space-3xl);
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+    }
+    .section-title::before {
+      content: '';
+      display: block;
+      width: 4px;
+      height: 1.875rem;
+      background: linear-gradient(180deg, var(--accent), var(--accent2));
+      border-radius: var(--radius-full);
+      flex-shrink: 0;
+    }
+    .section-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ══════════════════════════════════
+       ABOUT
+    ══════════════════════════════════ */
+    #about { background: var(--bg-secondary); }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-3xl);
+      align-items: start;
+    }
+    .about-bio p {
+      color: var(--muted);
+      margin-bottom: var(--space-md);
+      font-size: 1rem;
+      line-height: 1.8;
+    }
+    .about-bio p strong { color: var(--text); }
+    .about-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-md);
+    }
+    .stat-card {
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: var(--space-lg);
+      text-align: center;
+      transition: all var(--transition);
+    }
+    .stat-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(56,189,248,0.1);
+    }
+    .stat-number {
+      display: block;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--accent);
+      line-height: 1.1;
+    }
+    .stat-label {
+      display: block;
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-top: var(--space-xs);
+      font-family: 'JetBrains Mono', monospace;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    /* ══════════════════════════════════
+       SKILLS
+    ══════════════════════════════════ */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-xl);
+    }
+    .skill-group {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-xl);
+      transition: border-color var(--transition);
+    }
+    .skill-group:hover { border-color: var(--accent2); }
+    .skill-group-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--accent2);
+      margin-bottom: var(--space-md);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+    }
+    .badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 500;
+      padding: 0.25rem 0.65rem;
+      border-radius: var(--radius-full);
+      border: 1px solid transparent;
+      transition: all var(--transition);
+      cursor: default;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .badge img {
+      width: 14px;
+      height: 14px;
+      display: block;
+      flex-shrink: 0;
+    }
+    .badge .di { filter: brightness(0) invert(1); opacity: 0.85; }
+    .badge-blue {
+      background: rgba(56,189,248,0.1);
+      color: #7dd3fc;
+      border-color: rgba(56,189,248,0.2);
+    }
+    .badge-blue:hover {
+      box-shadow: 0 0 0 1px var(--accent);
+      background: rgba(56,189,248,0.15);
+    }
+    .badge-teal {
+      background: rgba(192,132,252,0.1);
+      color: #d8b4fe;
+      border-color: rgba(192,132,252,0.25);
+    }
+    .badge-teal:hover {
+      box-shadow: 0 0 0 1px #c084fc;
+      background: rgba(192,132,252,0.15);
+    }
+    .badge-grey {
+      background: rgba(251,146,60,0.1);
+      color: #fdba74;
+      border-color: rgba(251,146,60,0.25);
+    }
+    .badge-grey:hover {
+      box-shadow: 0 0 0 1px #fb923c;
+      background: rgba(251,146,60,0.15);
+    }
+
+    /* ══════════════════════════════════
+       EXPERIENCE
+    ══════════════════════════════════ */
+    #experience { background: var(--bg-secondary); }
+    .timeline {
+      position: relative;
+      padding-left: 2rem;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 7px; top: 0; bottom: 0;
+      width: 2px;
+      background: linear-gradient(180deg, var(--accent2), var(--accent2), var(--border));
+    }
+    .timeline-item {
+      position: relative;
+      margin-bottom: var(--space-2xl);
+    }
+    .timeline-item:last-child { margin-bottom: 0; }
+    .timeline-dot {
+      position: absolute;
+      left: -2rem;
+      top: 1.4rem;
+      width: 14px; height: 14px;
+      border-radius: 50%;
+      background: var(--bg-secondary);
+      border: 2px solid var(--muted);
+      z-index: 1;
+    }
+    .timeline-dot.in-view {
+      border-color: var(--accent2);
+      background: var(--accent2);
+      transform: scale(1.3);
+      transition: transform 0.3s ease, background 0.3s ease, border-color 0.3s ease;
+    }
+    .timeline-card {
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-xl);
+      transition: all var(--transition);
+    }
+    .timeline-card:hover {
+      border-color: rgba(56,189,248,0.4);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 30px rgba(56,189,248,0.08);
+    }
+    .timeline-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-md);
+    }
+    .timeline-header h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .company-name {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--accent);
+    }
+    .date-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--muted);
+      background: var(--bg-secondary);
+      padding: 0.15rem 0.6rem;
+      border-radius: var(--radius-full);
+      border: 1px solid var(--border);
+      white-space: nowrap;
+    }
+    .location-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+    .divider-dot {
+      color: var(--border);
+      font-size: 0.6rem;
+    }
+    .timeline-bullets {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+    .timeline-bullets li {
+      font-size: 0.9rem;
+      color: var(--muted);
+      padding-left: var(--space-md);
+      position: relative;
+    }
+    .timeline-bullets li::before {
+      content: '▸';
+      position: absolute;
+      left: 0;
+      color: var(--accent2);
+      font-size: 0.7rem;
+      top: 0.35em;
+    }
+
+    /* ══════════════════════════════════
+       PROJECTS
+    ══════════════════════════════════ */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(480px, 1fr));
+      gap: var(--space-xl);
+    }
+    .project-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-xl);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+      position: relative;
+      overflow: hidden;
+      transition: all var(--transition);
+    }
+    .project-card:hover {
+      border-color: rgba(56,189,248,0.4);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(56,189,248,0.1);
+    }
+    .project-ribbon {
+      position: absolute;
+      top: 14px; right: -22px;
+      background: var(--warning);
+      color: #fff;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      font-weight: 500;
+      padding: 0.2rem 1.8rem;
+      transform: rotate(35deg);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    .project-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1.3;
+    }
+    .project-desc {
+      font-size: 0.875rem;
+      color: var(--muted);
+      line-height: 1.7;
+      flex: 1;
+    }
+    .project-highlight {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--accent2);
+      background: rgba(45,212,191,0.08);
+      border: 1px solid rgba(45,212,191,0.2);
+      border-radius: var(--radius-sm);
+      padding: 0.4rem 0.7rem;
+      display: inline-block;
+    }
+    .project-tools {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-xs);
+    }
+    .tool-badge {
+      font-size: 0.7rem;
+      padding: 0.2rem 0.55rem;
+    }
+    .project-links {
+      display: flex;
+      gap: var(--space-sm);
+      margin-top: var(--space-xs);
+    }
+    .btn-link {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--accent);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 0.35rem 0.9rem;
+      border: 1px solid var(--accent);
+      border-radius: var(--radius-full);
+      transition: all var(--transition);
+    }
+    .btn-link:hover {
+      background: rgba(56,189,248,0.08);
+      transform: translateY(-1px);
+    }
+    .btn-link svg { width: 14px; height: 14px; }
+    .btn-link-disabled {
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 0.35rem 0.9rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-full);
+      cursor: not-allowed;
+      opacity: 0.6;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* ══════════════════════════════════
+       EDUCATION
+    ══════════════════════════════════ */
+    #education { background: var(--bg-secondary); }
+    .edu-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-xl);
+    }
+    .edu-card {
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-2xl);
+      transition: all var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+    .edu-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+    }
+    .edu-card:hover {
+      border-color: rgba(56,189,248,0.4);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 30px rgba(56,189,248,0.08);
+    }
+    .edu-flag {
+      font-size: 1rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      display: inline-block;
+      margin-bottom: var(--space-md);
+      padding: 0.2rem 0.6rem;
+      border-radius: var(--radius-full);
+      background: rgba(56,189,248,0.1);
+      color: var(--accent);
+      border: 1px solid rgba(56,189,248,0.2);
+    }
+    .edu-card h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: var(--space-sm);
+      line-height: 1.4;
+    }
+    .edu-school {
+      font-size: 0.9rem;
+      color: var(--accent);
+      font-weight: 500;
+      margin-bottom: var(--space-xs);
+    }
+    .edu-date {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    /* ══════════════════════════════════
+       CONTACT
+    ══════════════════════════════════ */
+    .contact-center {
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .contact-sub {
+      color: var(--muted);
+      font-size: 1rem;
+      margin-bottom: var(--space-2xl);
+      line-height: 1.7;
+    }
+    .contact-links {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+      margin-bottom: var(--space-2xl);
+      align-items: center;
+    }
+    .contact-item {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-md);
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.95rem;
+      padding: 0.65rem var(--space-xl);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-full);
+      background: var(--bg-secondary);
+      min-width: 280px;
+      justify-content: center;
+      transition: all var(--transition);
+    }
+    .contact-item:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+      background: rgba(56,189,248,0.06);
+      transform: translateY(-2px);
+    }
+    .contact-item svg { width: 18px; height: 18px; flex-shrink: 0; }
+
+    /* ══════════════════════════════════
+       FOOTER
+    ══════════════════════════════════ */
+    footer {
+      background: var(--bg-secondary);
+      border-top: 1px solid var(--border);
+      padding: var(--space-xl) 0;
+    }
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: var(--space-md);
+    }
+    .footer-inner span {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+    .footer-socials {
+      display: flex;
+      gap: var(--space-md);
+    }
+    .footer-socials a {
+      color: var(--muted);
+      text-decoration: none;
+      transition: color var(--transition);
+      display: flex;
+      align-items: center;
+    }
+    .footer-socials a:hover { color: var(--accent); }
+    .footer-socials svg { width: 18px; height: 18px; }
+
+    /* ══════════════════════════════════
+       RESPONSIVE
+    ══════════════════════════════════ */
+    @media (max-width: 900px) {
+      .skills-grid { grid-template-columns: 1fr; }
+      .projects-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      .hamburger { display: block; }
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 64px; left: 0; right: 0;
+        background: var(--bg-secondary);
+        border-bottom: 1px solid var(--border);
+        flex-direction: column;
+        padding: var(--space-md) var(--space-xl);
+        gap: var(--space-md);
+      }
+      .nav-links.open { display: flex; }
+
+      .hero-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: var(--space-2xl);
+      }
+      .hero-avatar { order: -1; }
+      .avatar-ring { width: 180px; height: 180px; margin: 0 auto; }
+      .hero-btns { justify-content: center; }
+      .hero-socials { justify-content: center; }
+
+      .about-grid { grid-template-columns: 1fr; }
+      .edu-grid { grid-template-columns: 1fr; }
+
+      section { padding: var(--space-3xl) 0; }
+    }
+
+    @media (max-width: 480px) {
+      .container { padding: 0 var(--space-md); }
+      .avatar-ring { width: 140px; height: 140px; }
+      .about-stats { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══ NAV ══ -->
+  <nav id="navbar">
+    <div class="nav-progress" id="navProgress"></div>
+    <div class="container nav-inner">
+      <a class="nav-logo" href="#hero">Ricky D. <span>Pham</span></a>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">☰</button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ══ HERO ══ -->
+  <section id="hero">
+    <div class="hero-bloom-purple"></div>
+    <div class="hero-bloom-cyan"></div>
+    <div class="hero-scanlines"></div>
+    <div class="hero-glow-bar"></div>
+    <div class="container hero-grid">
+      <div class="hero-text">
+        <p class="hero-greeting">Hello! I'm</p>
+        <h1 class="hero-name">Ricky D. Pham</h1>
+        <h2 class="hero-role">
+          <span id="typewriter"></span><span class="cursor">|</span>
+        </h2>
+        <p class="hero-location">📍Garden Grove, CA</p>
+        <div class="hero-btns">
+          <a href="#projects" class="btn btn-primary">View My Work</a>
+          <a href="#contact" class="btn btn-outline">Get In Touch</a>
+          </a>
+        </div>
+        <div class="hero-socials">
+          <!-- GitHub -->
+          <a href="https://github.com/rdpham" class="social-link" target="_blank" rel="noopener" aria-label="GitHub">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.604-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836a9.59 9.59 0 012.504.337c1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+          </a>
+          <!-- LinkedIn -->
+          <a href="https://www.linkedin.com/in/ricky-d-pham" class="social-link" target="_blank" rel="noopener" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+          <!-- Email -->
+          <a href="mailto:ridph27@gmail.com" class="social-link" aria-label="Email">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 01-2.06 0L2 7"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="hero-avatar">
+        <div class="avatar-ring">
+          <img src="images/headshot.jpeg" alt="Headshot of Ricky" loading="eager" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ ABOUT ══ -->
+  <section id="about">
+    <div class="container">
+      <h2 class="section-title reveal">About Me</h2>
+      <div class="about-grid">
+        <div class="about-bio reveal">
+          <p>I'm a <strong>Data Analyst</strong> based in Garden Grove, CA. I build things with data — turning raw numbers into stories that drive decisions.</p>
+          <p>I'm passionate about data and uncovering meaningful stories through data analysis and data visualization. I use <strong>Excel, SQL, Power BI, and Python</strong> to explore datasets, identify patterns and 
+            trends, and transform raw data into clear, actionable insights that support real-world decision-making.</p>     
+          <p>Outside of data, I am an avid <strong>chess player </strong>and enjoy the strategic and competitive aspects of the game. I like how it strengthens my problem-solving skills 
+            and ability to think several steps ahead.
+          </p>
+        </div>
+        <div class="about-stats reveal">
+          <div class="stat-card">
+            <span class="stat-number">4+</span>
+            <span class="stat-label">Years Experience</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-number">4</span>
+            <span class="stat-label">Projects</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-number">1</span>
+            <span class="stat-label">Degree</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-number">10+</span>
+            <span class="stat-label">Tools & Stacks</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ SKILLS ══ -->
+  <section id="skills">
+    <div class="container">
+      <h2 class="section-title reveal">Skills &amp; Tools</h2>
+      <div class="skills-grid">
+        <div class="skill-group reveal">
+          <p class="skill-group-title">Programming &amp; Data</p>
+          <div class="badge-row">
+            <span class="badge badge-blue"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" alt="" onerror="this.style.display='none'">SQL</span>
+            <span class="badge badge-blue"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="" onerror="this.style.display='none'">Python</span>
+            <span class="badge badge-blue"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pandas/pandas-original.svg" alt="" onerror="this.style.display='none'">Pandas</span>
+            <span class="badge badge-blue"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/numpy/numpy-original.svg" alt="" onerror="this.style.display='none'">NumPy</span>
+            <span class="badge badge-blue"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/scikitlearn/scikitlearn-original.svg" alt="" onerror="this.style.display='none'">Scikit-learn</span>
+            <span class="badge badge-blue"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/matplotlib/matplotlib-original.svg" alt="" onerror="this.style.display='none'">Matplotlib</span>
+          </div>
+        </div>
+        <div class="skill-group reveal">
+          <p class="skill-group-title">Visualization &amp; BI</p>
+          <div class="badge-row">
+            <span class="badge badge-teal"><img src="https://cdn.simpleicons.org/powerbi/F2C811" alt="" onerror="this.style.display='none'">Power BI</span>
+            <span class="badge badge-teal"><img src="https://cdn.simpleicons.org/tableau/E97627" alt="" onerror="this.style.display='none'">Tableau</span>
+            <span class="badge badge-teal"><img src="https://cdn.simpleicons.org/microsoftexcel/217346" alt="" onerror="this.style.display='none'">Excel</span>
+            <span class="badge badge-teal"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/matplotlib/matplotlib-original.svg" alt="" onerror="this.style.display='none'">Seaborn</span>
+            
+          </div>
+        </div>
+        <div class="skill-group reveal">
+          <p class="skill-group-title">Tools &amp; Systems</p>
+          <div class="badge-row">
+            <span class="badge badge-grey"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt="" onerror="this.style.display='none'">Git</span>
+            <span class="badge badge-grey"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" class="di" alt="" onerror="this.style.display='none'">GitHub</span>
+            <span class="badge badge-grey"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jira/jira-original.svg" alt="" onerror="this.style.display='none'">JIRA</span>
+            <span class="badge badge-grey">Microsoft 365</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  
+  <!-- ══ PROJECTS ══ -->
+  <section id="projects">
+    <div class="container">
+      <h2 class="section-title reveal">Projects</h2>
+      <div class="projects-grid">
+
+        <!-- Food Delivery Dataset — FEATURED FIRST -->
+        <div class="project-card reveal">
+          <h3 class="project-title">Food Delivery (Aug. 2020-Present) </h3>
+          <span class="project-highlight"></span>
+          <p class="project-desc">Explored a self-created Food Delivery dataset based on <strong>DoorDash</strong> and <strong>Uber Eats</strong> orders to analyze customer behavior and delivery performance trends.
+                                  Performed exploratory data analysis using SQL to clean, transform, and structure the dataset, uncovering key insights into order patterns and customer activity.
+                                  Developed an interactive Power BI dashboard to transform raw data into actionable insights, tracking short-term and long-term performance against key business goals.
+          </p>
+          <div class="project-tools">
+            <span class="badge badge-blue tool-badge">Excel</span>
+            <span class="badge badge-teal tool-badge">Power BI</span>
+            <span class="badge badge-grey tool-badge">MySQL</span>
+            
+          </div>
+          <div class="project-links">
+            <a href="https://github.com/rdpham/Portfolio_Projects/blob/main/Food%20Delivery/(Power%20BI)%20Food%20Delivery%20Dashboard.pdf" class="btn-link" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.604-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836a9.59 9.59 0 012.504.337c1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+              View Dashboard
+            </a>
+             <a href="https://github.com/rdpham/Portfolio_Projects/blob/main/Food%20Delivery/(SQL)%20Food%20Delivery%20-%20EDA.sql" class="btn-link" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.604-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836a9.59 9.59 0 012.504.337c1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+              View SQL Queries
+            </a>
+          </div>
+        </div>
+
+        <!-- COVID-19 Dataset -->
+        <div class="project-card reveal">
+          <h3 class="project-title">COVID-19</h3>
+          <span class="project-highlight"></span>
+          <p class="project-desc">Conducted exploratory data analysis on a COVID-19 dataset using Excel and SQL to clean and analyze data, uncovering key trends in infection rates, mortality, 
+                                  and vaccination progress. Performed calculations to evaluate likelihood of death, percentage of population infected, and overall global statistics, 
+                                  with breakdowns by continent and worldwide trends.
+          </p>
+          <div class="project-tools">
+            <span class="badge badge-blue tool-badge">Excel</span>
+            <span class="badge badge-grey tool-badge">MySQL</span>
+
+          </div>
+          <div class="project-links">
+            <a href="https://github.com/rdpham/Portfolio_Projects/blob/main/COVID%20Portfolio%20Project%20-%20Data%20Exploration.sql" class="btn-link" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.604-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836a9.59 9.59 0 012.504.337c1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+              View on GitHub
+            </a>
+          </div>
+        </div>
+
+        <!-- Film Industry & Box Office -->
+        <div class="project-card reveal">
+          <h3 class="project-title">Film Industry &amp; Box Office</h3>
+          <span class="project-highlight"></span>
+          <p class="project-desc">Used Python for data analysis and data visualization on a movies dataset. Peformed data cleaning (handling missing values, outliers, and duplicates) 
+                                  and exploratory analysis to uncover data-driven insights. Conducted several correlation analysis and identified the highest-grossing production companies
+                                  to highlight key performance trends in the film industry.
+                                </p>
+          <div class="project-tools">
+            <span class="badge badge-blue tool-badge">Python</span>
+            <span class="badge badge-teal tool-badge">Pandas</span>
+            <span class="badge badge-grey tool-badge">NumPy</span>
+            <span class="badge badge-blue tool-badge">Seaborn</span>
+            <span class="badge badge-teal tool-badge">Matplotlib</span>
+            
+           
+          </div>
+          <div class="project-links">
+            <a href="https://github.com/rdpham/Portfolio_Projects/blob/main/Movie%20Portfolio%20Project.ipynb" class="btn-link" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.604-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836a9.59 9.59 0 012.504.337c1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+              View on GitHub
+            </a>
+          </div>
+        </div>
+
+        <!-- Nashville Housing Project -->
+        <div class="project-card reveal">
+          <h3 class="project-title">Nashville Housing</h3>
+          <span class="project-highlight"></span>
+          <p class="project-desc">Used SQL to clean and transform a Nashville Housing dataset by standardizing date formats, populating missing property address data, and splitting 
+            addresses into individual columns (address, city, state). Removed duplicate records and unnecessary columns to improve data quality and structure for analysis.
+          </p>
+          <div class="project-tools">
+            <span class="badge badge-blue tool-badge">MySQL</span>        
+          </div>
+          <div class="project-links">
+            <a href="https://github.com/rdpham/Portfolio_Projects/blob/main/Data%20Cleaning%20(Nashville%20Housing%20Data)%20Project%20Queries.sql" class="btn-link" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.604-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836a9.59 9.59 0 012.504.337c1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+              View on GitHub
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ EDUCATION ══ -->
+  <section id="education">
+    <div class="container">
+      <h2 class="section-title reveal">Education</h2>
+      <div class="edu-grid">
+        <div class="edu-card reveal">
+          
+          <h3>Bachelor of Arts in Business Administration Emphasis in Accounting and Information Systems</h3>
+          <p class="edu-school">California State University, Fullerton</p>
+          <p class="edu-date">Graduated May 2020  · Fullerton, CA</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ CONTACT ══ -->
+  <section id="contact">
+    <div class="container">
+      <div class="contact-center">
+        <h2 class="section-title reveal" style="justify-content:center;">Let's Connect</h2>
+        <p class="contact-sub reveal">Open to full-time data analyst roles. Feel free to reach out — I'm always happy to chat.</p>
+        <div class="contact-links reveal">
+          <a href="mailto:ridph27@gmail.com" class="contact-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 01-2.06 0L2 7"/></svg>
+            ridph27@gmail.com
+          </a>
+          <a href="https://www.linkedin.com/in/ricky-d-pham" class="contact-item" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            /in/ricky-d-pham
+          </a>
+          </div>
+        <a href="mailto:ridph27@gmail.com" class="btn btn-primary reveal">Contact</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ FOOTER ══ -->
+  <footer>
+    <div class="container footer-inner">
+      <span>Designed &amp; Built by Ricky D. Pham · April 2026</span>
+      <div class="footer-socials">
+        <a href="https://github.com/rdpham" target="_blank" rel="noopener" aria-label="GitHub">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.604-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836a9.59 9.59 0 012.504.337c1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+        </a>
+        <a href="https://www.linkedin.com/in/ricky-d-pham" target="_blank" rel="noopener" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ── 1. Typewriter ──
+    const roles = ['Data Analyst', 'Business Analyst', 'Data Engineer'];
+    let roleIdx = 0, charIdx = 0, deleting = false;
+    const tw = document.getElementById('typewriter');
+    function typeLoop() {
+      const current = roles[roleIdx];
+      if (!deleting) {
+        tw.textContent = current.slice(0, charIdx + 1);
+        charIdx++;
+        if (charIdx === current.length) {
+          deleting = true;
+          setTimeout(typeLoop, 1800);
+          return;
+        }
+        setTimeout(typeLoop, 80);
+      } else {
+        tw.textContent = current.slice(0, charIdx - 1);
+        charIdx--;
+        if (charIdx === 0) {
+          deleting = false;
+          roleIdx = (roleIdx + 1) % roles.length;
+          setTimeout(typeLoop, 300);
+          return;
+        }
+        setTimeout(typeLoop, 45);
+      }
+    }
+    typeLoop();
+
+
+    // ── 3. Nav scroll state + progress bar ──
+    const navbar = document.getElementById('navbar');
+    const navProgress = document.getElementById('navProgress');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 80);
+      const pct = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+      navProgress.style.width = Math.min(pct, 100) + '%';
+    });
+
+    // ── 4. Scroll-spy (active nav link) ──
+    const sections = document.querySelectorAll('section[id]');
+    const navAs = document.querySelectorAll('.nav-links a');
+    const spyObs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          navAs.forEach(a => a.classList.remove('active'));
+          const active = document.querySelector(`.nav-links a[href="#${e.target.id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { threshold: 0.4 });
+    sections.forEach(s => spyObs.observe(s));
+
+    // ── 5. Timeline dot scroll-spy ──
+    const timelineItems = document.querySelectorAll('.timeline-item');
+    const timelineDots  = document.querySelectorAll('.timeline-dot');
+    const dotObs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        const idx = [...timelineItems].indexOf(e.target);
+        if (idx > -1) {
+          timelineDots[idx].classList.toggle('in-view', e.isIntersecting);
+        }
+      });
+    }, { threshold: 0.5 });
+    timelineItems.forEach(item => dotObs.observe(item));
+
+    // ── 6. Fade-in on scroll ──
+    const revealObs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          revealObs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+    // ── 6. Hamburger nav ──
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('navLinks');
+    hamburger.addEventListener('click', () => {
+      const open = navLinks.classList.toggle('open');
+      hamburger.textContent = open ? '✕' : '☰';
+    });
+    navLinks.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        navLinks.classList.remove('open');
+        hamburger.textContent = '☰';
+      });
+    });
+
+  </script>
+</body>
+</html>
